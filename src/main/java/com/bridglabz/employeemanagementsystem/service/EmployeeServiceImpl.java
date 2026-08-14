@@ -2,7 +2,6 @@ package com.bridglabz.employeemanagementsystem.service;
 
 import com.bridglabz.employeemanagementsystem.dto.EmployeeRequestDTO;
 import com.bridglabz.employeemanagementsystem.dto.EmployeeResponseDTO;
-import com.bridglabz.employeemanagementsystem.exception.IdInvalidException;
 import com.bridglabz.employeemanagementsystem.model.Employee;
 import com.bridglabz.employeemanagementsystem.repository.EmployeeRepository;
 import org.springframework.stereotype.Service;
@@ -33,8 +32,8 @@ public class EmployeeServiceImpl implements EmployeeService {
 
     // Retrieves an employee by their ID.
     @Override
-    public EmployeeResponseDTO getEmployeeById(Long id) throws IdInvalidException {
-        Employee employee = employeeRepository.findById(id).orElseThrow(() -> new IdInvalidException("id not found"));
+    public EmployeeResponseDTO getEmployeeById(Long id) {
+        Employee employee = employeeRepository.findById(id).orElseThrow(() -> new RuntimeException("invalid id"));
         return convertToResponseDto(employee);
     }
 
@@ -50,8 +49,8 @@ public class EmployeeServiceImpl implements EmployeeService {
 
     // Updates an existing employee by their ID.
     @Override
-    public EmployeeResponseDTO updateEmployee(Long id, EmployeeRequestDTO requestDTO) throws IdInvalidException {
-        Employee employee = employeeRepository.findById(id).orElseThrow(() -> new IdInvalidException("id not found"));
+    public EmployeeResponseDTO updateEmployee(Long id, EmployeeRequestDTO requestDTO) {
+        Employee employee = employeeRepository.findById(id).orElseThrow(() -> new RuntimeException("not found by id"));
         employee.setName(requestDTO.getName());
         employee.setEmail(requestDTO.getEmail());
         employee.setDepartment(requestDTO.getDepartment());
