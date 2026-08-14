@@ -2,6 +2,7 @@ package com.bridglabz.employeemanagementsystem.controller;
 
 import com.bridglabz.employeemanagementsystem.dto.EmployeeRequestDTO;
 import com.bridglabz.employeemanagementsystem.dto.EmployeeResponseDTO;
+import com.bridglabz.employeemanagementsystem.exception.IdInvalidException;
 import com.bridglabz.employeemanagementsystem.model.Employee;
 import com.bridglabz.employeemanagementsystem.service.EmployeeService;
 import com.bridglabz.employeemanagementsystem.service.EmployeeServiceImpl;
@@ -30,13 +31,13 @@ public class EmployeeController {
 
     // Retrieves an employee by their ID.
     @GetMapping("/{id}")
-    public EmployeeResponseDTO getEmployeeById(@PathVariable("id") Long id){
+    public EmployeeResponseDTO getEmployeeById(@PathVariable("id") Long id) throws IdInvalidException {
         return (employeeService.getEmployeeById(id));
     }
 
     // Updates an existing employee by their ID.
     @PutMapping("/{id}")
-    public EmployeeResponseDTO updateEmployee(@PathVariable("id") Long id,@RequestBody EmployeeRequestDTO requestDTO){
+    public EmployeeResponseDTO updateEmployee(@PathVariable("id") Long id,@RequestBody EmployeeRequestDTO requestDTO) throws IdInvalidException {
         return (employeeService.updateEmployee(id, requestDTO));
     }
 
